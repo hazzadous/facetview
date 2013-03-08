@@ -708,6 +708,13 @@ This can define or reference a function that will be executed any time new searc
         // given a result record, build how it should look on the page
         var buildrecord = function(index) {
             var record = options.data['records'][index];
+
+            // Allow override by specifying result_template.  This 
+            // should be a function taking a record and returning html
+            if (options.result_template) {
+              return options.result_template(record);
+            }
+
             var result = options.resultwrap_start;
             // add first image where available
             if (options.display_images) {

@@ -976,9 +976,15 @@ This can define or reference a function that will be executed any time new searc
             qs['facets'] = {};
             for (var item in options.facets) {
                 var fobj = jQuery.extend(true, {}, options.facets[item] );
+                var facet_filter = fobj['facet_filter'];
                 delete fobj['display'];
+                delete fobj['facet_filter'];
+                var facet = {'terms': fobj};
+                if (facet_filter) {
+                    facet['facet_filter'] = facet_filter;
+                }
                 var parts = fobj['field'].split('.');
-                qs['facets'][fobj['field']] = {"terms":fobj};
+                qs['facets'][fobj['field']] = facet;
                 if ( options.nested.indexOf(parts[0]) != -1 ) {
                     nested ? qs['facets'][fobj['field']]["scope"] = parts[0] : qs['facets'][fobj['field']]["nested"] = parts[0];
                 }

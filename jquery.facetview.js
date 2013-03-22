@@ -270,6 +270,10 @@ post_search_callback
 --------------------
 This can define or reference a function that will be executed any time new search results are retrieved and presented on the page.
 
+linkify
+---------
+Make links in the output clickable. Defaults to true
+
 */
 
 
@@ -372,7 +376,8 @@ This can define or reference a function that will be executed any time new searc
             "resultwrap_end":"</td></tr>",
             "result_box_colours":[],
             "fadein":800,
-            "post_search_callback": false
+            "post_search_callback": false,
+            "linkify": true
         };
 
 
@@ -861,7 +866,9 @@ This can define or reference a function that will be executed any time new searc
             $.each(data.records, function(index, value) {
                 // write them out to the results div
                  $('#facetview_results', obj).append( buildrecord(index) );
-                 $('#facetview_results tr:last-child', obj).linkify();
+                 if (options.linkify) {
+                     $('#facetview_results tr:last-child', obj).linkify();
+                 }
             });
             if ( options.result_box_colours.length > 0 ) {
                 jQuery('.result_box', obj).each(function () {
